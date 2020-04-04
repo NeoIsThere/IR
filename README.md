@@ -1,5 +1,8 @@
 # IR
-Basic image recognition program in C++
+
+
+### **//RECOGNITION STEPS**
+_If you think any of these steps could be done in a better way then do it in the better way but please update the README!_
 
 The objective is to find something specific within an image. An image of what needs to be found must be provided.
 
@@ -25,7 +28,7 @@ Like an AND gate where Green = 1 and Red = 0.
 
 We output C images in descending order of number of Green pixels.
 
-//OOP
+### **//OOP**
 
 Image: Class composed of a matrix of pixels and some methods to manipulate that matrix.
 
@@ -35,16 +38,16 @@ Target: Class composed of an image and some methods to analyze that image.
 
 Searcher: Class composed of an image and some methods to search within that image using the target.
 
-//INFO:
+### **//INFO:**
 
 COLOR DIFFERENCES: "Same color" is vague. How to mathematically compute the difference between 2 colors? We could consider the R,G,B 3D color space where R is the X axis, G is Y axis
 and B is the Z axis, each color would be a point and we would simply compute the distance between those 2 point but this method does not work since those distances don't match the
 human-perceived distance between colors. Some colors really close to each other will be perceived as totally different. That's why we use CIE L*a*b* and deltaE. In short the CIE thing is 
 a color space that matches human perceived distances and deltaE calculates those distances. We use deltaE 2000 which is currently the most complicated, yet most accurate, CIE color difference algorithm 
 available. 
-TL;DR: To compare 2 colors convert both to CIE L*a*b* then calculate delta E.
+_TL;DR: To compare 2 colors convert both to CIE L*a*b* then calculate delta E._
 
-delta E table:
+**delta E table:**
 <= 1.0	Not perceptible by human eyes.
 1 - 2	Perceptible through close observation.
 2 - 10	Perceptible at a glance.
