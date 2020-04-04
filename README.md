@@ -48,8 +48,8 @@ available.
 _TL;DR: To compare 2 colors convert both to CIE L*a*b* then calculate delta E._
 
 ### **delta E table:**
-<= 1.0	Not perceptible by human eyes.
-1 - 2	Perceptible through close observation.
-2 - 10	Perceptible at a glance.
-11 - 49	Colors are more similar than opposite
-100	Colors are exact opposite.
+- <= 1.0	Not perceptible by human eyes.
+- 1 - 2	Perceptible through close observation.
+- 2 - 10	Perceptible at a glance.
+- 11 - 49	Colors are more similar than opposite
+- 100	Colors are exact opposite.
