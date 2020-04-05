@@ -9,14 +9,9 @@ The objective is to find something specific within an image. An image of what ne
 The process takes 3 main steps: Analysis, Search, Results.
 
 Let's call T the image of the object to be found and S the image the program will search.
-T is first analyzed, the program determines its main colors and shape. T pixels belonging to the background are given a specific color A
-and the others are given a specific color B.
-When the analysis is complete, the program begins searching S, the trigger in that search is the color: if a pixel has a color resembling T's main colors the recursive construction algorithm starts.
-That algorithm record the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels and so on. When the recursion is over (the adjacent pixels do not have a color resembling main colors) the program turns all the pixels recorded into a concrete image C. All pixels of C are sent in a rectangular size Z1 matrix proportional to the size Z2 of the T.
-A resize is done so that Z2 = Z1. C contains all the extracted pixels and some new pixels added to fill
-the matrix. Those new pixels are given the color A while the extracted pixels the color B. Extracted pixels on the source are also given a specific unique color just so the program doesn't rescan the same pixels over and over resulting in an infinite loop. 
+T is first analyzed, the program determines its main colors and shape. The program computes color ratio, colors that have really low ratio are discarded just to get rid of potential "corrupted" pixels. T pixels belonging to the background are given a specific color A and the others are given a specific color B. When the analysis is complete, the program begins searching S, the trigger in that search is the color: if a pixel has a color resembling T's main colors the recursive construction algorithm starts.
+That algorithm record the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels and so on. When the recursion is over (the adjacent pixels do not have a color resembling main colors) the program turns all the pixels recorded into a concrete image C. All pixels of C are sent in a rectangular size Z1 matrix proportional to the size Z2 of the T. A comparison of the color ratio of C and T is performed, if C ratios don't match then C is destroyed, or else a resize is done so that Z2 = Z1. Image C contains all the extracted pixels and some new pixels added to fill the matrix. Those new pixels are given the color A while the extracted pixels are given the color B. Extracted pixels in image S are also given a specific unique color just so the program doesn't rescan the same pixels. 
 The scan then resumes and it keeps looping through those sub steps until all pixels have been scanned. 
-
 
 The candidates C obtained are compared with T by subtraction of pixels. Pixel subtraction only aims to compare the shape of 2 objects.
 The equations of subtraction:
@@ -24,8 +19,6 @@ The equations of subtraction:
 - A-B = Red
 - B-A = Red
 - B-B = Green
-Like an AND gate where Green = 1 and Red = 0.
-
 We output C images in descending order of number of Green pixels.
 
 ### **OOP**
