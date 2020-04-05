@@ -2,7 +2,7 @@
 
 
 ### **RECOGNITION STEPS**
-_If you think any of these steps could be done in a better way then do it in the better way but please update the README!_
+_If you think any of these steps could be done in a better way then do it in a better way but keep this readme up to date.
 
 The objective is to find something specific within an image. An image of what needs to be found must be provided.
 
