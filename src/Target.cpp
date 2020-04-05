@@ -1,6 +1,15 @@
 #include "Target.hpp"
 
-Target::Target(Image& target) :target_(target), backgroundColor_({ 0,0,0 }){
+ostream& operator<<(ostream& os, mainColor& mc)
+{
+	os << "Color: " << mc.color << endl;
+	os << "Ratio: " << mc.ratio *100 << "%" << endl;
+	os << "First appearance: " << mc.firstAppearance << endl;
+	os << "Nombre instances: " << mc.nInstances << endl;
+	return os;
+}
+
+Target::Target(Image& target) :target_(target), backgroundColor_({ 0,0,0 }), nBackgroundPixels_(0){
 }
 
 Target::~Target() {
@@ -20,22 +29,53 @@ Pixel Target::getBackgroundColor() const{
 	return backgroundColor_;
 }
 
-vector<ColorPixel>&Target::getMainColors(){
+vector<mainColor>&Target::getMainColors(){
 
 	return mainColors_;
 }
+
+vector<LAB>& Target::getMainLabColors() {
+
+	return mainLABColors_;
+}
+
 
 Image& Target::getTarget() {
 	return target_;
 }
 
+int Target::getNBackgroundPixels()
+{
+	return nBackgroundPixels_;
+}
+
+void Target::setPixelToColor(Pixel& pix, Pixel& color)
+{
+	pix.b = color.b;
+	pix.g = color.g;
+	pix.r = color.r;
+	
+}
+
 bool Target::alreadyThere(LAB pixelLAB, int deltaEMainColors) {
-	for (auto i : mainLABColors_) {
-		if (CIEDE2000(pixelLAB, i) <= deltaEMainColors) {
-			return true;
+	bool alreadyThere = false;
+	double delta=0;
+	double deltaMin=101;
+	int index=0;
+
+	for (int i = 0; i < mainLABColors_.size();i++) {
+		if ((delta= CIEDE2000(pixelLAB, mainLABColors_[i])) <= deltaEMainColors) {
+			alreadyThere = true;
+			if (delta < deltaMin) {
+				deltaMin = delta;
+				index = i;
+			}
 		}
 	}
-	return false;
+	if(alreadyThere)
+	++mainColors_[index].nInstances;
+	
+	return alreadyThere;
 }
 
 void Target::identifyColors(int deltaEBackGround, int deltaEMainColors) {
@@ -47,18 +87,30 @@ void Target::identifyColors(int deltaEBackGround, int deltaEMainColors) {
 	int hauteur = target_.getHauteur();
 	int largeur = target_.getLargeur();
 	for(int i=0; i<hauteur;i++)
-		for(int j = 0; j < largeur; j+=2) {
+		for(int j = 0; j < largeur; j++) {
 			LAB pixelLAB = toLAB(pixels[i][j]);
 			if (CIEDE2000(backgroundLAB, pixelLAB) > deltaEBackGround) {
 				if (!alreadyThere(pixelLAB, deltaEMainColors)) {
-				mainLABColors_.push_back(pixelLAB);
-				ColorPixel cp;
-				cp.color = pixels[i][j];
-				cp.position.x = j;
-				cp.position.y = i;
-				mainColors_.push_back(cp);
+					mainLABColors_.push_back(pixelLAB);
+					mainColor mc;
+					mc.color = pixels[i][j];
+					mc.firstAppearance.x = j;
+					mc.firstAppearance.y = i;
+					mc.nInstances = 1;
+					mc.ratio = 0;
+					mainColors_.push_back(mc);
+					
+				}
+				Pixel white{ 255,255,255 };
+				setPixelToColor(pixels[i][j], white);
 			}
+			else {
+				++nBackgroundPixels_;
+				Pixel black{ 0,0,0 };
+				setPixelToColor(pixels[i][j], black);
 			}
+			
+
 		}
 	
 }
@@ -74,13 +126,22 @@ void Target::crop()
 	rect.coin2.x = getCoordinateFirstPixel(0, 1);
 	rect.coin2.y = getCoordinateFirstPixel(0, 0);
 
-	cout << rect.coin1.x <<" " << rect.coin1.y << endl;
-	cout << rect.coin2.x << " " << rect.coin2.y << endl;
+	//cout << rect.coin1.x <<" " << rect.coin1.y << endl;
+	//cout << rect.coin2.x << " " << rect.coin2.y << endl;
 	
 	target_ = target_.extraireRectangle(rect);
 
 	
 
+	
+}
+
+void Target::calculateColorRatio()
+{
+	int nPixels = target_.getNPixels();
+	for (int i = 0; i < mainColors_.size();i++) {
+		mainColors_[i].ratio = mainColors_[i].nInstances / nPixels;
+	}
 	
 }
 

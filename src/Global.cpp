@@ -7,12 +7,12 @@
 #endif
 
 ostream& operator<<(ostream& os, Pixel pix) {
-	os << int(pix.r) << " " << int(pix.g) << " " << int(pix.b) << endl;
+	os << int(pix.r) << " " << int(pix.g) << " " << int(pix.b);
 	return os;
 }
 
 ostream& operator<<(ostream& os, Point point) {
-	os << "x: " << point.x << " y: " << point.y << endl;
+	os << "x: " << point.x << " y: " << point.y;
 	return os;
 }
 

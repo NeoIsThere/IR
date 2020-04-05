@@ -2,12 +2,17 @@
 
 #include "Image.hpp"
 
-/*Finds main colors of target. Bottom left corner (0,0) is used to determine background color. Slight variations of background color allowed thanks to Delta E calculator. */
 
-struct ColorPixel {
+
+struct mainColor {
 	Pixel color;
-	Point position;
+	Point firstAppearance;
+	double nInstances;
+	double ratio;
 };
+
+
+ostream& operator<<(ostream& os, mainColor& mc);
 
 class Target {
 public:
@@ -16,9 +21,13 @@ public:
 	void identifyBackgroundColor();
 	void identifyColors(int deltaEBackGround, int deltaEMainColors);
 	void crop();
+	void calculateColorRatio();
 	Pixel getBackgroundColor() const;
-	vector<ColorPixel>& getMainColors();
+	vector<mainColor>& getMainColors();
+	vector<LAB>& getMainLabColors();
 	Image& getTarget();
+	int getNBackgroundPixels();
+	void setPixelToColor(Pixel& pix, Pixel& color);
 	
 
 private:
@@ -27,6 +36,7 @@ private:
 	Image target_;
 	Pixel backgroundColor_;
 	vector<LAB> mainLABColors_;
-	vector<ColorPixel> mainColors_;
+	vector<mainColor> mainColors_;
+	int nBackgroundPixels_;
 
 };

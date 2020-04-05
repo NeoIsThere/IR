@@ -144,6 +144,8 @@ public:
 	Image& operator=(const Image&);
 
 	Pixel** getTableau();
+	
+	int getNPixels() const;
 
 	int getLargeur() const;
 	

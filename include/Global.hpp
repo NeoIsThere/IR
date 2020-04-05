@@ -1,16 +1,18 @@
 #pragma once
+
+
+#include <iostream>
+#include <vector>
+
+
+using namespace std;
+
 /**
  * \struct Point
  * \brief  Un point en 2D
  *
  * Un point avec des coordonnées en X et Y, en pixels.
  */
-
-#include <iostream>
-
-using namespace std;
-
-
 struct Point
 {
 	unsigned x;
@@ -58,6 +60,18 @@ ostream& operator<<(ostream& os, Point point);
 
 
 
+template<typename T>
+int findMin(vector<T>& vect) {
+	int min = 0;
+	if (vect.size() > 0) {
+		min = vect[0];
+		for (auto i : vect) {
+			if (i < min)
+				min = i;
+		}
+	}
+	return min;
+}
 
 
 struct LAB

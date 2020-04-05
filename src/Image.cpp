@@ -48,6 +48,10 @@ Image::Image(const Image& im):Image(im.largeur_, im.hauteur_) {
 			pixels_[i][j] = im.pixels_[i][j];
 }
 
+int Image::getNPixels() const {
+	return largeur_ * hauteur_;
+}
+
 Image& Image::operator=(const Image& image) {
 	if (this != &image) {
 		for (auto i : range(hauteur_)) {
