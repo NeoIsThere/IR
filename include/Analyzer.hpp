@@ -14,10 +14,10 @@ struct mainColor {
 
 ostream& operator<<(ostream& os, mainColor& mc);
 
-class Target {
+class Analyzer {
 public:
-	Target(Image& target);
-	~Target();
+	Analyzer(Image& target);
+	~Analyzer();
 	void identifyBackgroundColor();
 	void identifyColors(int deltaEBackGround, int deltaEMainColors);
 	void crop();

@@ -1,4 +1,4 @@
-#include "Target.hpp"
+#include "Analyzer.hpp"
 
 ostream& operator<<(ostream& os, mainColor& mc)
 {
@@ -9,47 +9,47 @@ ostream& operator<<(ostream& os, mainColor& mc)
 	return os;
 }
 
-Target::Target(Image& target) :target_(target), backgroundColor_({ 0,0,0 }), nBackgroundPixels_(0){
+Analyzer::Analyzer(Image& target) :target_(target), backgroundColor_({ 0,0,0 }), nBackgroundPixels_(0){
 }
 
-Target::~Target() {
+Analyzer::~Analyzer() {
 	mainColors_.clear();
 	mainLABColors_.clear();
 }
 
 
 
-void Target::identifyBackgroundColor() {
+void Analyzer::identifyBackgroundColor() {
 
 	backgroundColor_ = target_.getTableau()[0][0];
 
 }
 
-Pixel Target::getBackgroundColor() const{
+Pixel Analyzer::getBackgroundColor() const{
 	return backgroundColor_;
 }
 
-vector<mainColor>&Target::getMainColors(){
+vector<mainColor>&Analyzer::getMainColors(){
 
 	return mainColors_;
 }
 
-vector<LAB>& Target::getMainLabColors() {
+vector<LAB>& Analyzer::getMainLabColors() {
 
 	return mainLABColors_;
 }
 
 
-Image& Target::getTarget() {
+Image& Analyzer::getTarget() {
 	return target_;
 }
 
-int Target::getNBackgroundPixels()
+int Analyzer::getNBackgroundPixels()
 {
 	return nBackgroundPixels_;
 }
 
-void Target::setPixelToColor(Pixel& pix, Pixel& color)
+void Analyzer::setPixelToColor(Pixel& pix, Pixel& color)
 {
 	pix.b = color.b;
 	pix.g = color.g;
@@ -57,7 +57,7 @@ void Target::setPixelToColor(Pixel& pix, Pixel& color)
 	
 }
 
-bool Target::alreadyThere(LAB pixelLAB, int deltaEMainColors) {
+bool Analyzer::alreadyThere(LAB pixelLAB, int deltaEMainColors) {
 	bool alreadyThere = false;
 	double delta=0;
 	double deltaMin=101;
@@ -78,7 +78,7 @@ bool Target::alreadyThere(LAB pixelLAB, int deltaEMainColors) {
 	return alreadyThere;
 }
 
-void Target::identifyColors(int deltaEBackGround, int deltaEMainColors) {
+void Analyzer::identifyColors(int deltaEBackGround, int deltaEMainColors) {
 	//deltaEBackground: if deltaE superior to that value we consider that the pixel doesn't belong to the background.
 	//deltaEMainColors: if deltaE superior to that value we consider the 2 colors to be differents.
 	identifyBackgroundColor();
@@ -115,7 +115,7 @@ void Target::identifyColors(int deltaEBackGround, int deltaEMainColors) {
 	
 }
 
-void Target::crop()
+void Analyzer::crop()
 {
 	int hauteur = target_.getHauteur();
 	int largeur = target_.getLargeur();
@@ -136,7 +136,7 @@ void Target::crop()
 	
 }
 
-void Target::calculateColorRatio()
+void Analyzer::calculateColorRatio()
 {
 	int nPixels = target_.getNPixels();
 	for (int i = 0; i < mainColors_.size();i++) {
@@ -145,7 +145,7 @@ void Target::calculateColorRatio()
 	
 }
 
-int Target::getCoordinateFirstPixel(bool coin1, bool x)
+int Analyzer::getCoordinateFirstPixel(bool coin1, bool x)
 {
 	int hauteur = target_.getHauteur();
 	int largeur = target_.getLargeur();

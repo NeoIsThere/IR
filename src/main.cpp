@@ -1,5 +1,5 @@
 #include "Global.hpp"
-#include "Target.hpp"
+#include "Analyzer.hpp"
 
 #include <ciso646>
 #include <cstddef>
@@ -23,7 +23,7 @@ int main() {
 	initDebogageMemoire();
 	Image image;
 	image.lireImage("sliced_orange.bmp");
-	Target target(image);
+	Analyzer target(image);
 	target.identifyBackgroundColor();
 	target.crop();
 	target.identifyColors(10, 13);
@@ -48,17 +48,15 @@ int main() {
 	double pourcentage = 0;
 	double nPixels = target.getTarget().getNPixels();
 	double pourcentageBg = double(target.getNBackgroundPixels()) / nPixels;
-	
+	*/
 
 	
 
 	for (auto i : MC) {
 		cout << i << endl;
-		instances += i.nInstances;
-		pourcentage += i.ratio;
 	}
 
-	
+	/*
 	cout << target.getNBackgroundPixels() + instances << endl;
 	cout << nPixels << endl;
 	cout << pourcentage + pourcentageBg << endl;
