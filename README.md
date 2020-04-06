@@ -1,37 +1,58 @@
 # IR
 
 
-### **RECOGNITION STEPS**
+
 _If you think any of these steps could be done in a better way then do it in a better way but keep this readme up to date._
 
-The objective is to find something specific within an image. An image of what needs to be found must be provided. Right now only bmp files are supported.
+The objective is to find something specific within an image. An image of what needs to be found must be provided. In the current version only bmp files are supported.
 
-The process takes 3 main steps: Analysis, Search, Results.
 
-Let's call T the image of the object to be found and S the image the program will search.
-T is first analyzed, the program determines its main colors and shape. The program computes color ratio, colors that have really low ratio are discarded just to get rid of potential "corrupted" pixels. T pixels belonging to the background are given a specific color A and the others are given a specific color B. When the analysis is complete, the program begins searching S, the trigger in that search is the color: if a pixel has a color resembling T's main colors the recursive construction algorithm starts.
-That algorithm record the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels and so on. When the recursion is over (the adjacent pixels do not have a color resembling main colors) the program turns all the pixels recorded into a concrete image C. All pixels of C are sent in a rectangular size Z1 matrix proportional to the size Z2 of the T. A comparison of the color ratio of C and T is performed, if C ratios don't match then C is destroyed, or else a resize is done so that Z2 = Z1. Image C contains all the extracted pixels and some new pixels added to fill the matrix. Those new pixels are given the color A while the extracted pixels are given the color B. Extracted pixels in image S are also given a specific unique color just so the program doesn't rescan the same pixels. 
-The scan then resumes and it keeps looping through those sub steps until all pixels have been scanned. 
+The program will search image T within image S.
 
+The process takes 3 main steps: Analysis, Search, Results. 
+
+### Analysis:
+
+- Class Analyser
+- T is first analyzed, the program determines its main colors and shape.
+- The program computes color ratio, colors that have really low ratio are discarded just to get rid of potential "corrupted" pixels. 
+- T pixels belonging to the background are given a specific color A and the others are given a specific color B. 
+
+
+
+### Search: 
+
+- Class Searcher
+- If a pixel has a color resembling T's main colors the recursive construction algorithm starts.
+- That algorithm record the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels and so on. When the recursion is over (the adjacent pixels do not have a color resembling main colors) the program turns all the pixels recorded into a concrete image C. 
+- All pixels of C are sent in a rectangular size Z1 matrix proportional to the size Z2 of the T.
+- A comparison of the color ratio of C and T is performed, if C ratios don't match then C is destroyed, or else a resize is done so that Z2 = Z1. 
+- Image C contains all the extracted pixels and some new pixels added to fill the matrix. Those new pixels are given the color A while the extracted pixels are given the color B. Extracted pixels in image S are also given a specific unique color just so the program doesn't rescan the same pixels. 
+- The scan then resumes and it keeps looping through those sub steps until all pixels have been scanned. 
+
+### Results:
 The candidates C obtained are compared with T by subtraction of pixels. Pixel subtraction only aims to compare the shape of 2 objects.
 The equations of subtraction:
+
+- Class Results
 - A-A = Green
 - A-B = Red
 - B-A = Red
 - B-B = Green
 We output C images in descending order of number of Green pixels.
 
-### **OOP**
+## **OOP**
+
+Analyzer, Searcher and Results methods have already been described above.
+
+**Other classes:**
 
 Image: Class composed of a matrix of pixels and some methods to manipulate that matrix.
 
 Pixels: Data structure containing R,G,B values.
 
-Target: Class composed of an image and some methods to analyze that image.
 
-Searcher: Class composed of an image and some methods to search within that image using the target.
-
-### **MISC:**
+## **MISC:**
 
 **Color differentiation:** "Same color" is vague. How to mathematically compute the difference between 2 colors? We could consider the R,G,B 3D color space where R is the X axis, G the Y axis
 and B the Z axis, each color would be a point and we would simply compute the distance between those 2 point but this method does not work since those distances don't match the human-perceived distance between colors. Some colors really close to each other in that space will be perceived as totally different. That's why we use CIE L*a*b* color space and the deltaE formula. In short the CIE thing is 
