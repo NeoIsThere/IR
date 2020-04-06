@@ -3,24 +3,27 @@ _If you think it shouldn't be done this way then change it._
 
 ## HOW IT WORKS:
 
+The program will look for image T in image S.
+
 ### Analysis:
 
 - Class Analyser
-- T is first analyzed, the program determines its main colors and shape.
-- The program computes color ratio, colors that have really low ratio are discarded just to get rid of potential "corrupted" pixels. 
-- T pixels belonging to the background are given a specific color A and the others are given a specific color B. 
+- determining T main color and shape.
+- computing color ratio, colors that have really low ratio are discarded to get rid of unwanted "corruption".
+- T pixels belonging to background are given color A while others are given  color B. 
 
 
 
 ### Search: 
 
 - Class Searcher
-- If a pixel has a color resembling T's main colors the recursive construction algorithm starts.
-- That algorithm record the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels and so on. When the recursion is over (the adjacent pixels do not have a color resembling main colors) the program turns all the pixels recorded into a concrete image C. 
-- All pixels of C are sent in a rectangular size Z1 matrix proportional to the size Z2 of the T.
-- A comparison of the color ratio of C and T is performed, if C ratios don't match then C is destroyed, or else a resize is done so that Z2 = Z1. 
-- Image C contains all the extracted pixels and some new pixels added to fill the matrix. Those new pixels are given the color A while the extracted pixels are given the color B. Extracted pixels in image S are also given a specific unique color just so the program doesn't rescan the same pixels. 
-- The scan then resumes and it keeps looping through those sub steps until all pixels have been scanned. 
+- If a pixel has a color resembling T main colors recursive construction starts.
+- recursive construction records the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels. 
+- collected pixels are sent in an image C of size Z1 proportional to the size Z2 of the T.
+- comparison of the color ratio of C and T is performed, if C ratios don't match C is destroyed
+- or else a resize is done so that Z2 = Z1. 
+- If not destroyed C contains all the extracted pixels and some new pixels added to fill the matrix. Those new pixels are given color A while the extracted pixels are given color B. Extracted pixels in image S are also given a specific unique color so the program doesn't rescan pixels. 
+- it keeps looping through those sub steps until all pixels have been scanned. 
 
 ### Results:
 The candidates C obtained are compared with T by subtraction of pixels. Pixel subtraction only aims to compare the shape of 2 objects.
