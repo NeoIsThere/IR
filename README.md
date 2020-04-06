@@ -1,10 +1,7 @@
-# IR
 
+_If you think it shouldn't be done this way then change it._
 
-
-_If you think something could be done in a better way then do it but keep this readme up to date._
-
-In the current version only bmp files are supported. The program will search image T within image S, the process takes 3 main steps: Analysis, Search, Results. 
+## HOW IT WORKS:
 
 ### Analysis:
 
@@ -36,27 +33,21 @@ The equations of subtraction:
 - B-B = Green
 We output C images in descending order of number of Green pixels.
 
-## **OOP**
-
-Analyzer, Searcher and Results methods have already been described above.
-
-**Other classes:**
-
-Image: Class composed of a matrix of pixels and some methods to manipulate that matrix.
-
-Pixels: Data structure containing R,G,B values.
-
 
 ## **MISC:**
+
+In the current version only bmp files are supported. 
 
 **Color differentiation:** "Same color" is vague. How to mathematically compute the difference between 2 colors? We could consider the R,G,B 3D color space where R is the X axis, G the Y axis
 and B the Z axis, each color would be a point and we would simply compute the distance between those 2 point but this method does not work since those distances don't match the human-perceived distance between colors. Some colors really close to each other in that space will be perceived as totally different. That's why we use CIE L*a*b* color space and the deltaE formula. In short the CIE thing is 
 a color space that matches human perceived distances and deltaE calculates those distances. We use deltaE 2000 which is currently the most complicated, yet most accurate CIE color difference algorithm available. 
 _TL;DR: To compare 2 colors convert their R,G,B to CIE L*a*b* then calculate delta E._
 
-### **delta E table:**
+**Delta E table:**
 - <= 1.0	Not perceptible by human eyes.
 - 1 - 2	Perceptible through close observation.
 - 2 - 10	Perceptible at a glance.
 - 11 - 49	Colors are more similar than opposite
 - 100	Colors are exact opposite.
+
+_keep this README updated!_
