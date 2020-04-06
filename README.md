@@ -2,14 +2,9 @@
 
 
 
-_If you think any of these steps could be done in a better way then do it in a better way but keep this readme up to date._
+_If you think something could be done in a better way then do it but keep this readme up to date._
 
-The objective is to find something specific within an image. An image of what needs to be found must be provided. In the current version only bmp files are supported.
-
-
-The program will search image T within image S.
-
-The process takes 3 main steps: Analysis, Search, Results. 
+In the current version only bmp files are supported. The program will search image T within image S, the process takes 3 main steps: Analysis, Search, Results. 
 
 ### Analysis:
 
