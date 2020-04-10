@@ -1,10 +1,8 @@
-
-_If you think it shouldn't be done this way then change it._
-
 ## HOW IT WORKS:
 
-The program will look for image T in image S.
+The whole process is divived into steps managed by different classes. This READ ME gives a description of each step. It is absolutely not permanent _if you think any of those steps could be done in a better way then change it._
 
+Let's call T the image to be found and S the image to be searched.
 ### Analysis:
 
 - Class Analyser
@@ -21,7 +19,7 @@ The program will look for image T in image S.
 - recursive construction records the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels. 
 - collected pixels are sent in an image C of size Z1 proportional to the size Z2 of the T.
 - comparison of the color ratio of C and T is performed, if C ratios don't match C is destroyed
-- or else a resize is done so that Z2 = Z1. 
+- or else Z1 is resized so Z1 = Z2 
 - If not destroyed C contains all the extracted pixels and some new pixels added to fill the matrix. Those new pixels are given color A while the extracted pixels are given color B. Extracted pixels in image S are also given a specific unique color so the program doesn't rescan pixels. 
 - it keeps looping through those sub steps until all pixels have been scanned. 
 
