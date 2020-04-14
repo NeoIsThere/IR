@@ -51,4 +51,13 @@ _TL;DR: To compare 2 colors convert their R,G,B to CIE L*a*b* then calculate del
 - 11 - 49	Colors are more similar than opposite
 - 100	Colors are exact opposite.
 
+**Ideas for new features:**
+- A database of pictures of thousands of differents objects so we can tell the program to look for a "TV", a "lion" or anything
+specific without providing a picture. 
+- The database could have many pictures of the same object under different angles and coloration for better recognition
+- Self improving algorithms by trial and error. The algorithm would suggest what he thinks is a "car" for example and a human would confirm or reject. The algorithm will have to adapt consequently to provide better suggestions.
+
+
 _keep this README updated!_
+
+
