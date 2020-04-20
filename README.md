@@ -1,42 +1,47 @@
 ## HOW IT WORKS:
 
-The whole process is divived into steps managed by different classes. This READ ME gives a description of each step. It is absolutely not permanent _if you think any of those steps could be done in a better way then change it._
+The whole process is divived into steps managed by different classes. This READ ME gives a description of each step. It can change anytime, _if you think any of those steps could be done in a better way then update it._
 
 Let's call T the image to be found and S the image to be searched.
 ### Analysis:
-
+The program must first acquire data on the image T.
 - Class Analyser
 - determining T main color and shape.
-- computing color ratio, colors that have really low ratio are discarded to get rid of unwanted "corruption".
+- computing color ratio, colors that have really low ratio are discarded to get rid of unwanted "image corruption".
 - T pixels belonging to background are given color A while others are given  color B. 
 
 
 
 ### Search: 
-
+The program can then start looking for the image T.
 - Class Searcher
 - If a pixel has a color resembling T main colors recursive construction starts.
 - recursive construction records the position of the pixel then checks all the adjacent pixels and if any of them has color resembling the main colors then the algorithm starts over on these pixels. 
-- collected pixels are sent in an image C of size Z1 proportional to the size Z2 of the T.
-- comparison of the color ratio of C and T is performed, if C ratios don't match C is destroyed
-- or else Z1 is resized so Z1 = Z2 
-- If not destroyed C contains all the extracted pixels and some new pixels added to fill the matrix. Those new pixels are given color A while the extracted pixels are given color B. Extracted pixels in image S are also given a specific unique color so the program doesn't rescan pixels. 
+- **Collected pixels must then be prepared for a serie of tests:**
+- collected pixels are sent in an image C of size Z1 proportional to the size Z2 of T.
+- **Serie of tests**
+- #1 color ratio, #2 image size
+- to eliminate candidates with very low probability of being T
+- these are eliminatory-tests means C is immediately destroyed if not passed
+- if passed Z1 is resized so Z1 = Z2 
+- C then contains all the extracted pixels and some new pixels of color A added to fill the matrix. Extracted pixels in image S are given a specific unique color so the program doesn't rescan pixels. 
 - it keeps looping through those sub steps until all pixels have been scanned. 
 
 ### Results:
-The candidates C obtained are compared with T by subtraction of pixels. Pixel subtraction only aims to compare the shape of 2 objects.
+- for all retained images C a final test #3 is run to determine which is the closest to t
+- class results
+- test #3 compares color distribution within the picture 
+- to run the test pixels of original color (not A) are given color B. 
+- pixel subtraction is performed with image T
 The equations of subtraction:
-
-- Class Results
 - A-A = Green
 - A-B = Red
 - B-A = Red
 - B-B = Green
-We output C images in descending order of number of Green pixels.
+- the image with highest number of Green pixels is highlighted in S
 
 
 ## **MISC:**
-
 In the current version only bmp files are supported. 
 
 **Color differentiation:** "Same color" is vague. How to mathematically compute the difference between 2 colors? We could consider the R,G,B 3D color space where R is the X axis, G the Y axis
